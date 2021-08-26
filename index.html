@@ -1,0 +1,761 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Flutter Codelab / Coding Roulette #4 (BONUS): Creating a Landing Page widget - Building Layouts in Flutter (Workshop)</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="flutter-codelab-cr1-4"
+                  title="Flutter Codelab / Coding Roulette #4 (BONUS): Creating a Landing Page widget - Building Layouts in Flutter (Workshop)"
+                  environment="web"
+                  feedback-link="https://romanjustcodes.web.app">
+    
+      <google-codelab-step label="Overview" duration="0">
+        <p class="image-container"><img alt="LandingPage" src="img/a705c63e5345ddc5.png"></p>
+<h2 is-upgraded>What You&#39;ll Build in this Codelab:</h2>
+<ul>
+<li>Creating a Landing Page widget for your app</li>
+<li>Common Flutter Layout strategies using just core widgets</li>
+<li>Creating custom Flutter widgets (i.e. BottomBarWidget) and achieve widget composition</li>
+<li>Import network images</li>
+<li>Using Material Icon fonts</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Pre-requisites" duration="0">
+        <ul>
+<li>A computer with a browser</li>
+<li>An internet connection</li>
+</ul>
+<aside class="special"><p>We&#39;ll be using <a href="https://dartpad.dev/" target="_blank">DartPad</a>, a web-based, open-source tool that offers an online playground for learning Dart and Flutter. For more info, visit <a href="https://dart.dev/tools/dartpad" target="_blank">this link</a>.</p>
+</aside>
+<p>For the <strong>Coding Roulette Session</strong>:</p>
+<ul>
+<li>We&#39;ll be using <a href="https://code.visualstudio.com/learn/collaboration/live-share" target="_blank"><strong>LiveShare</strong></a>, a web-based VS Code plugin for real-time collaborative development.</li>
+</ul>
+<aside class="warning"><p>This is a bonus lab for the Flutter Codelab / Coding Roulette codelab series. If you&#39;d like to complete this one, you&#39;ll have to complete the previous labs below:</p>
+</aside>
+<ul>
+<li><a href="https://romanejaquez.github.io/flutter-codelab-cr1-1" target="_blank">Lab #1 - Creating the Splash Screen</a></li>
+<li><a href="https://romanejaquez.github.io/flutter-codelab-cr1-2" target="_blank">Lab #2 - Creating the List Page</a></li>
+<li><a href="https://romanejaquez.github.io/flutter-codelab-cr1-3" target="_blank">Lab #3 - Creating the Bottom Bar Widget</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Creating The Landing Page Widget" duration="0">
+        <p>Let&#39;s show a schematic view of what we&#39;ll be tackling with the <strong>LandingPage</strong> widget below:</p>
+<p class="image-container"><img alt="LandingPage" src="img/82f4ea58c10d9ab0.png"></p>
+<p>We&#39;ll build a simple landing page for our application. Initially, this app displays a <a href="https://romanejaquez.github.io/flutter-codelab-cr1-1" target="_blank">splash screen</a>, waits two seconds, then proceeds to show the landing page we&#39;ll create below. Afterwards, this landing page will navigate users to a <a href="https://romanejaquez.github.io/flutter-codelab-cr1-2" target="_blank">list page</a>.</p>
+<p>Let&#39;s start!</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setting up the project" duration="0">
+        <p>Assuming you&#39;ve already completed the previous labs, you should already have the project&#39;s main <strong>MaterialApp</strong> launch the <strong>SplashScreen</strong> page initially. For development purposes, let&#39;s point the <strong>MaterialApp</strong>&#39;s <strong><em>home</em></strong> property to the new page we&#39;ll create, which we&#39;ll call <strong>LandingPage</strong>. Go ahead and in the <strong>main</strong> method, inside the <strong>MaterialApp</strong>, replace the <strong>home</strong> property from <strong>SplashPage</strong> to <strong>LandingPage</strong> (or comment it out since we&#39;ll need it at the end) as follows:</p>
+<p class="image-container"><img alt="LandingPage" src="img/447295a611fdea51.png"></p>
+<p>Negative Don&#39;t worry about the red squiggly line under the <strong>LandingPage</strong> widget; we haven&#39;t created this class yet, that&#39;s why it&#39;s complaining. We&#39;ll create it in a minute.</p>
+<p>Let&#39;s proceed now and create the corresponding class.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create the Landing Page Widget Class" duration="0">
+        <p>Let&#39;s create the class that represents this new widget. Anywhere in this file (most conveniently at the bottom), add a new class called <strong>LandingPage</strong> that extends <strong>StatelessWidget</strong>. As usual, override its <strong>build</strong> method, and return some placeholder content: a <strong>Scaffold</strong> widget and for its <strong>body</strong> property, a <strong>Text</strong> widget with the content &#34;Landing Page&#34;:</p>
+<p class="image-container"><img alt="LandingPage" src="img/d19ab4ed4d88a7a.png"></p>
+<p>Positive In a full-blown Flutter project, of course you&#39;d create separate files for each of your widgets, which is the recommended approach. Since we&#39;re doing this in DartPad, we create all classes on a single file.</p>
+<p>Running whatever we have in DartPad, then viewing the output on the Preview Page, you should get the following:</p>
+<p class="image-container"><img alt="LandingPage" src="img/1123645054f56b17.png"></p>
+<p>Click <strong>Next</strong> and let&#39;s move on!</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Build the body to the Landing Page Widget&#39;s Scaffold" duration="0">
+        <p>We&#39;ll eliminate our placeholder <strong>Text</strong> widget from the <strong>Scaffold</strong>&#39;s <strong><em>body</em></strong> property and replace it by the root of the body structure, which will be a <strong>Stack</strong> widget. We&#39;ll use a <strong>Stack</strong> widget since we&#39;ll lay out the children widgets one of top of each other in a layered fashion, starting with the background image.</p>
+<p>First replace the <strong>Text</strong> widget with a <strong>Stack</strong> widget with empty *<strong>children</strong> property (assign it an empty array):</p>
+<p class="image-container"><img alt="LandingPage" src="img/bfc208f287b4facd.png"></p>
+<p>As the first child of this <strong>Stack</strong> widget, and going by our design, we will have a background image as the bottommost element, then all the elements will go at the top.</p>
+<p>Add a <strong>Container</strong> widget that will serve as the host of the image, which will be set as its background, by using the <strong>decoration</strong> property and set the BoxDecoration&#39;s <strong>image</strong> property to a <strong>DecorationImage</strong>, whic in turn we&#39;ll set a <strong>NetworkImage</strong> widget to the <strong>image</strong>&#39;s property of the <strong>DecorationImage</strong> widget. Set the <strong>DecorationImage</strong>&#39;s fit property to <strong>BoxFit.cover</strong> so it covers the whole <strong>Container</strong> area but without losing its aspect ratio:</p>
+<p class="image-container"><img alt="LandingPage" src="img/5231cac799864dad.png"></p>
+<p>Positive For the image, you can use the image in this <a href="https://images.pexels.com/photos/261394/pexels-photo-261394.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" target="_blank">link</a> or from a similar royalty-free image site.</p>
+<p class="image-container"><img alt="LandingPage" src="img/d834bf39dcf30b39.png"></p>
+<p>Running whatever we have accomplished so far in DartPad, you get the following in the Preview:</p>
+<p class="image-container"><img alt="LandingPage" src="img/3848208fa0a63709.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Add a Background Overlay" duration="0">
+        <p class="image-container"><img alt="LandingPage" src="img/ca9c74b9fc4b4362.png"></p>
+<p>We want to add a simple <strong>Container</strong> widget with a faded color to give a color overlay effect. This is easily accomplished by adding another <strong>Container</strong> widget to the <strong>Stack</strong> (on top of the image) and just lowe its opacity.</p>
+<p>Simple as adding a <strong>Container</strong> widget, and set its <strong>color</strong> property to the <strong>mainThemeColor</strong> and set a 70% opacity by using the <strong>withOpacity</strong> method of the <strong>Color</strong> object:</p>
+<p class="image-container"><img alt="LandingPage" src="img/23f7b3f221a97268.png"></p>
+<p>Check out how it came out by running it on DartPad now:</p>
+<p class="image-container"><img alt="LandingPage" src="img/6c7274e17682fda2.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Laying Down the Content Column Widget" duration="0">
+        <p class="image-container"><img alt="LandingPage" src="img/62e8afba55c93505.png"></p>
+<p>So far so good, so it&#39;s time to lay down the content pieces. On top of the background image and color overlay, we&#39;ll place a <strong>Column</strong> widget with a bunch of content. Add the <strong>Column</strong> widget and set both main axis and cross axis alignments to <strong>center</strong> and <strong>stretch</strong> respectively. Add an empty <strong>children</strong> property for now:</p>
+<p class="image-container"><img alt="LandingPage" src="img/42aa2cb9ec516ac8.png"></p>
+<p>Since this is a <strong>Column</strong> widget, its items will be laid out vertically, from top to bottom.</p>
+<p>Start by adding the first child to this <strong>Column</strong>: a <strong>Text</strong> widget; center aligned, and with a <strong>TextStyle</strong> with a white color, bold font, and font size 30px; add the content &#34;Paradise&#34; to it:</p>
+<p class="image-container"><img alt="LandingPage" src="img/df1b49c061fc3ecc.png"></p>
+<p>Let&#39;s keep adding items to this <strong>Column</strong>. We want to leave some breathing space between the items we&#39;ll be placing, so add a <strong>SizedBox</strong> with 60px height to denote some spacing here - add it right under the previous <strong>Text</strong> widget:</p>
+<p class="image-container"><img alt="LandingPage" src="img/486ed6ba1e090eef.png"></p>
+<p>Moving right along, we&#39;ll add the app&#39;s designated icon (Icons.pool) with a color white with 80px in size; and while  you&#39;re at it, add a <strong>SizedBox</strong> with 10px height for spacing purposes:</p>
+<p class="image-container"><img alt="LandingPage" src="img/fa4e95e567c0ed40.png"></p>
+<p>Let&#39;s add another <strong>Text</strong> widget for another label, with centered text, white color with a 50% opacity, and all the letters in uppercase. Since you&#39;re in that area, add another spacing <strong>SizedBox</strong> widget with 5px in height, as follows:</p>
+<p class="image-container"><img alt="LandingPage" src="img/36c6f0410a1e13d9.png"></p>
+<p>Let&#39;s add another <strong>Text</strong> widget, also with its text centered, white, 30px and bold, with the content &#34;Find a Hotel&#34;. Add also another <strong>SizedBox</strong> with 20px height right underneath it:</p>
+<p class="image-container"><img alt="LandingPage" src="img/89de40e5b47dcfac.png"></p>
+<p>If you run the app in DartPad at this moment, you should see the following on the Preview Pane:</p>
+<p class="image-container"><img alt="LandingPage" src="img/c7d8775000ce9ddd.png"></p>
+<p>Looking good! Now as the last item in this <strong>Column</strong> widget, and following our design, we&#39;ll add the search bar. But instead of building it inside of the <strong>Column</strong> using the core widgets available, we&#39;ll actually encapsulated into its own custom widget, which we&#39;ll call <strong>LandingSearchBar</strong>.</p>
+<p>We&#39;ll work on this custom widget on the next step. Click <strong>Next</strong> to proceed.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create the LandingSearchBar Custom Widget" duration="0">
+        <p>The schematic figure below shows how you&#39;d build a custom search bar layout (just the layout, no editable text field) and encapsulate its structure within a custom widget.</p>
+<p class="image-container"><img alt="LandingPage" src="img/89d6c0b569b395b4.png"></p>
+<p>Let&#39;s pick it up where we left off on the previous step.</p>
+<p>As the last item of the <strong>Column</strong> widget, add a placeholder widget called <strong>LandingSearchBar</strong>. We will create it in a minute:</p>
+<p class="image-container"><img alt="LandingPage" src="img/cf5782dfa04f0186.png"></p>
+<p>Let&#39;s create now the corresponding class for this landing search bar widget. Create a class called <strong>LandingSearchBar</strong> that extends <strong>StatelessWidget</strong> as customary for custom widgets that won&#39;t hold state within themselves. As usual, return a dummy <strong>Container</strong> widget as the return statement from the overridden *<strong>build</strong> method:</p>
+<p class="image-container"><img alt="LandingPage" src="img/c70a6cb3625fc3cf.png"></p>
+<p>Now let&#39;s proceed to further define the structure of this widget.</p>
+<p>Add left and right margin, 30px to this <strong>Container</strong>:</p>
+<p class="image-container"><img alt="LandingPage" src="img/482229b32e2982da.png"></p>
+<p>Add padding of 5px (top, bottom and right), and 20px (left):</p>
+<p class="image-container"><img alt="LandingPage" src="img/885f26656f8b69d.png"></p>
+<p>For the white background on the main <strong>Container</strong> and the rounded corners, use the <strong>decoration</strong> property and set it as a <strong>BoxDecoration</strong>; set its <strong>color</strong> to white, and <strong>borderRadius</strong> of 50:</p>
+<p class="image-container"><img alt="LandingPage" src="img/48239df3b366d2de.png"></p>
+<p>Now let&#39;s focus on the contents of this <strong>Container</strong>.</p>
+<p>As the child of this <strong>Container</strong>, add a <strong>Row</strong> widget - this is what will hold the placeholder text (a <strong>Text</strong> widget) and a circular search button (a styled <strong>Container</strong>), using a <strong>spaceBetween</strong> strategy laying down its children on the main axis; set the <strong>Row</strong>&#39;s <strong><em>children</em></strong> property to an empty array for now:</p>
+<p class="image-container"><img alt="LandingPage" src="img/26817b58b3cedae6.png"></p>
+<p>First child of this row will be the <strong>Search Hotel Text</strong> widget, so add the <strong>Text</strong> widget, content should say &#34;Search Hotel&#34;, with a grey color:</p>
+<p class="image-container"><img alt="LandingPage" src="img/502e0c48f59e2fd.png"></p>
+<p>Let&#39;s take a pause to run what we have on DartPad, and confirm that you can see the following:</p>
+<p class="image-container"><img alt="LandingPage" src="img/972c6cf7aa95b75b.png"></p>
+<h2 is-upgraded>Creating the round search bar button for the LandingSearchBar widget</h2>
+<p class="image-container"><img alt="LandingPage" src="img/e1c610e4332d4d6.png"></p>
+<p>We&#39;ll create a custom round tappable button with an icon that our users will be able to tap, which will perform a navigation to a list page once we&#39;re done.</p>
+<p>Let&#39;s build it!</p>
+<p>Inside the <strong>Row</strong> widget above, right next to the <strong>Text</strong> widget we created, add a <strong>Container</strong> widget, dimensions 30px by 30px, and use the same <strong>decoration</strong> property to apply both the background color (<strong><em>mainThemeColor</em></strong>) of the <strong>Container</strong> and border radius (<strong><em>BorderRadius.circular(25)</em></strong>); this applies the roundness to the <strong>Container</strong> making it look like a circle.</p>
+<p class="image-container"><img alt="LandingPage" src="img/9e1a692cbb9e32c2.png"></p>
+<p>Add an <strong>Icon</strong> widget as the child of this styled <strong>Container</strong>; add the icon <strong>Icons.search</strong>, with a white color and 15px in size:</p>
+<p class="image-container"><img alt="LandingPage" src="img/b1838c9e9ca5b950.png"></p>
+<h2 is-upgraded>Adding tapping capability to your custom widgets</h2>
+<p>In order to allow your widget elements to capture user gestures and events (i.e. become tappable and trigger events), you can wrap them inside a handy widget called <a href="https://api.flutter.dev/flutter/widgets/GestureDetector-class.html" target="_blank"><strong>GestureDetector</strong></a>. Since we want to make our rounded <strong>Container</strong> with the search icon tappable, wrap it inside a <strong>GestureDetector</strong> widget by setting this <strong>Container</strong> as the child of the <strong>GestureDetector</strong> widget; hook up its <strong>onTap</strong> event to an empty callback for now, as follows:</p>
+<p class="image-container"><img alt="LandingPage" src="img/cb32e99736da5d7c.png"></p>
+<h2 is-upgraded>Hook up the onTap event on the GestureDetector</h2>
+<p>Now it&#39;s time to implement the <strong>onTap</strong> event: we&#39;ll perform a simple navigation to the next page in turn (<strong><em>ListPage</em></strong>) upon tapping on our custom circular search button.</p>
+<p>Inside the <strong>onTap</strong> event, use the <strong>Navigator.context</strong> provision to access the navigator context provided by Flutter, and push a <strong>MaterialPageRoute</strong>, which wraps the page that we want to navigate to - the <strong>ListPage</strong> widget, as follows:</p>
+<p class="image-container"><img alt="LandingPage" src="img/dba0c2e3dda8f5c9.png"></p>
+<p>Now, if you take this for a spin, you should be able to tap on the circular search button inside the <strong>LandingSearchBar</strong> widget, which in turn will navigate you to the <strong>ListPage</strong> we created on <a href="https://romanejaquez.github.io/flutter-codelab-cr1-2" target="_blank">lab #2</a>. The screenshot below is what you should be seeing after completing the above steps:</p>
+<p class="image-container"><img alt="LandingPage" src="img/81f5e76c2f1692ca.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Add a minimal AppBar and Drawer" duration="0">
+        <p class="image-container"><img alt="LandingPage" src="img/674918ac07e76e09.png"></p>
+<p>In order to stay true to the design, we will have to add a simple <strong>AppBar</strong> and <strong>Drawer</strong> widget to the <strong>LandingPage</strong>&#39;s <strong>Scaffold</strong> widget - two of the essential widgets that get added to a <strong>Scaffold</strong> to consider a <strong>Material</strong>-based UI design complete.</p>
+<p>Let&#39;s proceed.</p>
+<h2 is-upgraded>Adding the AppBar widget</h2>
+<p>Usually the <strong>AppBar</strong> gets assigned to the <strong>Scaffold</strong> widget by setting its <strong>appBar</strong> property to an <strong>AppBar</strong> widget. An <a href="https://api.flutter.dev/flutter/material/AppBar-class.html" target="_blank"><strong>AppBar</strong></a> widget - just like the name implies - is the application&#39;s topmost bar, where we can place a title, navigation icons, menu icons, etc.</p>
+<p>In our case, we want the <strong>AppBar</strong> to look on top of the background image; for this effect to occur, we must add it to the existing <strong>Stack</strong> widget, right under the <strong>Column</strong> widget.</p>
+<p>Let&#39;s proceed by adding the <strong>AppBar</strong> to the <strong>Stack</strong> and setting the following properties to it:</p>
+<ul>
+<li>Set the <strong>elevation</strong> property to <strong>0</strong> - this removes the shadow from the <strong>AppBar</strong></li>
+<li>Set its <strong>backgroundColor</strong> property to <strong>Colors.transparent</strong> to remove the default blue</li>
+<li>Set its <strong>iconTheme</strong> property to <strong>IconThemeData(color: Colors.white)</strong> to set it to white so the <strong>AppBar</strong> icons inherit this color.</li>
+</ul>
+<p>Your code should look as follows:</p>
+<p class="image-container"><img alt="LandingPage" src="img/609139dbe00d2a10.png"></p>
+<p>Taking it for a spin on DartPad by running it, it should look like this:</p>
+<p class="image-container"><img alt="LandingPage" src="img/ee863307a1466814.png"></p>
+<p>Notice how the <strong>AppBar</strong> shows transparent, but shows the back chevron icon to go back to the splash screen. In order to make it show the hamburger menu to expand the drawer menu widget, you must add the <strong>Drawer</strong> widget.</p>
+<p>Let&#39;s do that now.</p>
+<h2 is-upgraded>Adding the Drawer Widget</h2>
+<p>Inside of the <strong>Scaffold</strong>, let&#39;s populate now the <strong>drawer</strong> property by assigning to it a <strong>Drawer</strong> widget. The <a href="https://api.flutter.dev/flutter/material/Drawer-class.html" target="_blank"><strong>Drawer</strong></a> widget is a panel that slides out horizontally from the edge of a <strong>Scaffold</strong> widget, used for menus, navigation links, etc.</p>
+<p>Your code should look as follows:</p>
+<p class="image-container"><img alt="LandingPage" src="img/ccbb30b8bb13bc6e.png"></p>
+<p>Now try expanding the drawer by tapping on the hamburger menu. It looks a little plain now.</p>
+<p class="image-container"><img alt="LandingPage" src="img/75fb92cdaa6c104.png"></p>
+<p>Let&#39;s add some content to this widget.</p>
+<h2 is-upgraded>Adding some content to the Drawer</h2>
+<p>Let&#39;s add some content to the <strong>Drawer</strong> widget and customize it a little bit. A <strong>Drawer</strong> is pretty much like any other single-child widget, in which you can add anything inside it and it will render as you please.</p>
+<p>First, let&#39;s start by adding a <strong>Container</strong> widget as the child of the <strong>Drawer</strong> widget, and set its padding to 20px all around using <strong>EdgeInsets.all(20)</strong>. By default, its background color is white so let&#39;s leave it as is. Align its contents to the bottom left corner by setting its <strong>alignment</strong> property to <strong>Alignment.bottomLeft</strong>:</p>
+<p class="image-container"><img alt="LandingPage" src="img/8ce8435edfd443d3.png"></p>
+<p>Now, add an <strong>Icon</strong> widget as the child of the newly added <strong>Container</strong> widget, with our specific icon (Icons.pool), color of <strong>mainThemeColor</strong> and size 80. Your code should look like this:</p>
+<p class="image-container"><img alt="LandingPage" src="img/731f83245a1dda0d.png"></p>
+<p>And with that, you should be all set with customizing the <strong>Drawer</strong> widget. You can feel free to add further elements and links to your own Drawer widgets, since it provides a lot of flexibility for customization. Check it out after running it on DartPad:</p>
+<p class="image-container"><img alt="LandingPage" src="img/268e56ed0547c083.png"></p>
+<p>Sweet! let&#39;s wrap things up on the next step. Click <strong>Next</strong> to continue.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Set up the app&#39;s final workflow" duration="0">
+        <p class="image-container"><img alt="LandingPage" src="img/d925b2fb820cb01f.png"></p>
+<p>Let&#39;s set up the app&#39;s final workflow which is:</p>
+<ul>
+<li>Splash screen shows (for 2 secs.)</li>
+<li>User gets navigated to the Landing Page</li>
+<li>Clicking on the circular search button, then lands the user on the List Page</li>
+</ul>
+<p>In order to accomplish this, let&#39;s start by reverting the change we made in the <strong>main</strong> method, inside the <strong>MaterialApp</strong>&#39;s <strong><em>home</em></strong> property - set this property back to be the <strong>SplashPage</strong> instead of the <strong>LandingPage</strong>:</p>
+<p class="image-container"><img alt="LandingPage" src="img/ec98d9f070c28b14.png"></p>
+<p>In the <strong>SplashPage</strong>, inside the <strong>Future.delayed()</strong> method, instead of navigating to the <strong>ListPage</strong> after the 2 seconds have ellapsed, change it to point to the <strong>LandingPage</strong> widget:</p>
+<p class="image-container"><img alt="LandingPage" src="img/70e6b812f474a18d.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Wrap-up" duration="0">
+        <p>And with that, we wrap up the codelab series for this workshop, where we accomplished the following:</p>
+<ul>
+<li>Created a Splash Screen Page</li>
+<li>Created a List Page</li>
+<li>Created a Bottom Bar Widget (StatefulWidget)</li>
+<li>Created a Landing Page Widget</li>
+<li>Created custom widgets and accomplish widget composition</li>
+<li>Created models and mocked data that fed these widgets</li>
+<li>Dive into building UI layouts in Flutter using just core widgets</li>
+<li>Delved into StatefulWidgets and how they changed state and trigger widget rebuilds</li>
+<li>Using Material Icons</li>
+<li>Basic Navigation Strategy</li>
+</ul>
+<h3 is-upgraded>Please don&#39;t forget to follow me on social media:</h3>
+<ul>
+<li>On Twitter (<a href="https://www.twitter.com/drcoderz" target="_blank">@drcoderz</a>)</li>
+<li>On YouTube (<a href="https://www.youtube.com/channel/UCKsp3r1ERjCpKJtD2n5WtPg" target="_blank">Roman Just Codes</a>)</li>
+<li>On My <a href="https://romanjustcodes.web.app/#/home" target="_blank">Personal Portfolio</a></li>
+<li>On <a href="https://medium.com/@romanejaquez" target="_blank">Medium</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Complete Code" duration="0">
+        <p>In case you fell behind on this codelab, below is the whole code for this codelab in a way you can copy / paste directly into DartPad:</p>
+<pre><code language="language-flutter" class="language-flutter">import &#39;package:flutter/material.dart&#39;;
+
+const Color mainThemeColor = Color(0xFF272D8D);
+
+final List&lt;Attraction&gt; attractionsList = [
+  Attraction(
+      imgPath:
+          &#39;https://cf.bstatic.com/xdata/images/hotel/max1024x768/275162028.jpg?k=38b638c8ec9ec86624f9a598482e95fa634d49aa3f99da1838cf5adde1a14521&amp;o=&amp;hp=1&#39;,
+      name: &#39;Grand Bavaro Princess&#39;,
+      desc: &#39;All-Inclusive Resort&#39;,
+      location: &#39;Punta Cana, DR&#39;,
+      rating: 3,
+      price: 80.0),
+  Attraction(
+      imgPath:
+          &#39;https://cf.bstatic.com/xdata/images/hotel/max1024x768/232161008.jpg?k=27808fe44ab95f6468e5433639bf117032c8271cebf5988bdcaa0a202b9a6d79&amp;o=&amp;hp=1&#39;,
+      name: &#39;Hyatt Ziva Cap Cana&#39;,
+      desc: &#39;All-Inclusive Resort&#39;,
+      price: 90.0,
+      rating: 4,
+      location: &#39;Punta Cana, DR&#39;),
+  Attraction(
+      imgPath:
+          &#39;https://cf.bstatic.com/xdata/images/hotel/max1024x768/256931299.jpg?k=57b5fb9732cd89f308def5386e221c46e52f48579345325714a310addf819274&amp;o=&amp;hp=1&#39;,
+      name: &#39;Impressive Punta Cana&#39;,
+      desc: &#39;All-Inclusive Resort&#39;,
+      price: 100.0,
+      rating: 5,
+      location: &#39;Punta Cana, DR&#39;),
+   Attraction(
+      imgPath:
+          &#39;https://cf.bstatic.com/xdata/images/hotel/max1024x768/283750757.jpg?k=4f3437bf1e1b077463c9900e4dd015633db1d96da38f034f4b70a4ba3ef76d82&amp;o=&amp;hp=1&#39;,
+      name: &#39;Villas Mar Azul Dreams&#39;,
+      desc: &#39;All-Inclusive Resort&#39;,
+      price: 100.0,
+      rating: 4,
+      location: &#39;Tallaboa, PR&#39;),
+];
+
+final List&lt;BottomBarItem&gt; barItemsList = [
+  BottomBarItem(label: &#39;Home&#39;, isSelected: true, icon: Icons.home),
+  BottomBarItem(label: &#39;Account&#39;, isSelected: false, icon: Icons.person),
+  BottomBarItem(label: &#39;Bookings&#39;, isSelected: false, icon: Icons.pending_actions),
+  BottomBarItem(label: &#39;Payments&#39;, isSelected: false, icon: Icons.payments),
+  BottomBarItem(label: &#39;More&#39;, isSelected: false, icon: Icons.more_horiz),
+];
+
+void main() {
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false, 
+      home: SplashPage()
+    )
+  );
+}
+
+class SplashPage extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) =&gt; LandingPage())
+      );
+    });
+
+    return Stack(
+      children: [
+        Container(
+          color: mainThemeColor
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.pool, 
+            color: Colors.white, 
+            size: 80
+          )
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: LinearProgressIndicator(
+            valueColor: AlwaysStoppedAnimation&lt;Color&gt;(
+              Colors.white.withOpacity(0.4)
+            )
+          )
+        )
+      ],
+    );
+  }
+}
+
+class LandingPage extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: Drawer(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          alignment: Alignment.bottomLeft,
+          child: Icon(Icons.pool, color: mainThemeColor, size: 80)
+        )
+      ),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(&#39;https://images.pexels.com/photos/261394/pexels-photo-261394.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940&#39;),
+                fit: BoxFit.cover
+              )
+            )
+          ),
+          Container(color: mainThemeColor.withOpacity(0.7)),
+          AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            iconTheme: IconThemeData(color: Colors.white),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(&#39;Paradise&#39;,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30
+                )
+              ),
+              SizedBox(height: 60),
+              Icon(Icons.pool, color: Colors.white, size: 80),
+              SizedBox(height: 10),
+              Text(&#39;Choose location to&#39;.toUpperCase(),
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white.withOpacity(0.5))
+              ),
+              SizedBox(height: 5),
+              Text(&#39;Find a Hotel&#39;, textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30, 
+                  fontWeight: FontWeight.bold
+                )
+              ),
+              SizedBox(height: 20),
+              LandingSearchBar()
+            ]
+          ),
+        ],
+      )
+    );  
+  }
+}
+
+class LandingSearchBar extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: 30, right: 30),
+      padding: EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 5),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(50)
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(&#39;Search hotel&#39;, style: TextStyle(color: Colors.grey)),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =&gt; ListPage()));
+            },
+            child: Container(
+              width: 30, height: 30,
+              child: Icon(Icons.search,color: Colors.white, size: 15),
+              decoration: BoxDecoration(
+                color: mainThemeColor,
+                borderRadius: BorderRadius.circular(25)
+              )
+            )
+          )
+          
+        ]
+      )
+    );
+  }
+}
+
+class ListPage extends StatelessWidget {
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.white),
+        elevation: 0,
+        title: Icon(Icons.pool, color: Colors.white),
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 15),
+            child: Icon(
+              Icons.notifications, 
+              color: Colors.white
+            )
+          )
+        ]
+      ),
+      backgroundColor: mainThemeColor,
+      body: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(50),
+          topRight: Radius.circular(50)
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(50),
+              topRight: Radius.circular(50)
+            )
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: attractionsList.length,
+                  itemBuilder: (context, index) {
+                    Attraction attr = attractionsList[index];
+                    return AttractionCard(attraction: attr);
+                  })
+              ),
+              BottomBarWidget()
+            ]
+          )
+        )
+      )
+    );
+  }
+}
+
+class AttractionCard extends StatelessWidget {
+
+  Attraction? attraction;
+  AttractionCard({ this.attraction });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(40),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 20,
+            offset: Offset.zero,
+            color: Colors.black.withOpacity(0.1)
+          )
+        ]
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(40),
+        child: Container(
+          height: 300,
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    height: 150,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(attraction!.imgPath!),
+                        fit: BoxFit.cover
+                      )
+                    )
+                  ),
+                  Container(
+                    height: 150,
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(attraction!.name!, 
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize:14,
+                                fontWeight:FontWeight.bold
+                              )
+                            ),
+                            SizedBox(width: 5),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.pin_drop,
+                                  color: Colors.grey.withOpacity(0.7),
+                                  size: 12
+                                ),
+                                SizedBox(width: 5),
+                                Text(attraction!.location!,
+                                  style: TextStyle(
+                                    fontSize: 12, 
+                                    color: Colors.grey.withOpacity(0.7), 
+                                    fontWeight: FontWeight.bold
+                                  )
+                                ),
+                              ]
+                            ),
+                            SizedBox(width: 5),
+                            RatingWidget(rating: attraction!.rating!)
+                          ]
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(&#39;\$${attraction!.price!.toStringAsFixed(2)}&#39;,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize:16,
+                                fontWeight: FontWeight.bold
+                              )
+                            ),
+                            SizedBox(height: 5),
+                            Text(&#39;Per Night&#39;,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey.withOpacity(0.7),
+                                fontWeight: FontWeight.bold
+                              )
+                            )
+                          ],
+                        )
+                      ]
+                    )
+                  )
+                ],
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  child: Icon(
+                    Icons.favorite,
+                    color: Colors.white,
+                    size: 15
+                  ),
+                  margin: EdgeInsets.only(right: 10),
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: mainThemeColor,
+                    borderRadius: BorderRadius.circular(40),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 10,
+                        color: mainThemeColor.withOpacity(0.5),
+                        offset:Offset.zero
+                      )
+                    ]
+                  )
+                )
+              )
+            ],
+          )
+        )
+      )
+    );
+  }
+}
+
+class BottomBarWidget extends StatefulWidget {
+  @override
+  BottomBarWidgetState createState() =&gt; BottomBarWidgetState();
+}
+
+class BottomBarWidgetState extends State&lt;BottomBarWidget&gt; {
+
+  List&lt;BottomBarItem&gt; barItems = barItemsList;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+        //... rest of the code omitted for brevity ...
+        children: List.generate(
+          barItems.length,
+          (index) {
+              
+            var barItem = barItems[index];
+
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  barItems.forEach((element) {
+                      element.isSelected = barItem == element;
+                  });
+                });
+              },
+              child: Column(
+                children: [
+                  Icon(barItem.icon, color: barItem.isSelected! 
+                    ? mainThemeColor : Colors.grey),
+                  Text(barItem.label!, style: TextStyle(
+                    color: (barItem.isSelected! ? mainThemeColor : Colors.grey), 
+                    fontSize: 11
+                  ))
+                ]
+              )
+            );
+        })
+      )
+    );
+  }
+}
+
+class RatingWidget extends StatelessWidget {
+
+  int? rating;
+  RatingWidget({ this.rating });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Row(
+          children: List.generate(5, (index) {
+            return Icon(
+              index &lt; this.rating! ? Icons.star : Icons.star_border,
+              color: Colors.yellow
+            );
+          })
+        ),
+        SizedBox(width: 5),
+        Text(&#39;${this.rating!}/5 Reviews&#39;,
+           style: TextStyle(
+             fontSize: 12, 
+             color: Colors.grey.withOpacity(0.7)
+          )
+        )
+      ],
+    );
+  }
+}
+
+class Attraction {
+  String? imgPath;
+  String? name;
+  String? desc;
+  double? price;
+  String? location;
+  int? rating;
+
+  Attraction({this.imgPath, this.name, this.desc, this.price, this.location, this.rating });
+}
+
+class BottomBarItem {
+  String? label;
+  bool? isSelected;
+  IconData? icon;
+  
+  BottomBarItem({ this.label, this.isSelected, this.icon });
+}
+
+
+</code></pre>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
